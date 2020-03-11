@@ -1,0 +1,36 @@
+package views;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Image;
+import java.awt.Toolkit;
+
+import javax.swing.JFrame;
+
+public class Wizard extends JFrame{
+
+	private static Wizard instance;
+	
+	static {
+		instance = new Wizard();
+	}
+	
+	public Wizard() {
+		super();
+		
+		setSize(640,480);
+		setLocationRelativeTo(null);
+		setMinimumSize(new Dimension(640, 480));
+		
+		Toolkit kit = Toolkit.getDefaultToolkit();
+		
+		Image ipoc = kit.getImage("images/pocetak.png");
+		setIconImage(ipoc);
+		
+		setLayout(new BorderLayout());
+		
+		setTitle("Installer");
+		
+		setLocationRelativeTo(null);
+	}
+}

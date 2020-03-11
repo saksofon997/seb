@@ -1,0 +1,122 @@
+package views;
+
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Image;
+import java.awt.Toolkit;
+
+import javax.swing.Box;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JToolBar;
+import javax.swing.SwingConstants;
+
+import actions.EditAction;
+import actions.RemoveAction;
+import actions.ShowKompanijaForm;
+import actions.ShowParameterForm;
+import actions.ShowProizvodForm;
+
+public class MyToolbar extends JToolBar{
+
+	private JButton Dnewk;
+
+	private JButton Dnewpr;
+	
+	private JButton Dnewpa;
+	
+	private JButton Dedit;
+	private JButton Ddelete;
+	
+	public MyToolbar() {
+		
+		super(SwingConstants.HORIZONTAL);
+		
+		Toolkit kit = Toolkit.getDefaultToolkit();
+		
+		setFloatable(false);
+		
+		
+		Image ikomp = kit.getImage("images/kompanija.png");
+		
+		Dnewk = new JButton(new ShowKompanijaForm(""));
+		Dnewk.setIcon(new ImageIcon(ikomp));
+		Dnewk.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		Dnewk.setPreferredSize(new Dimension(40, 40));
+		Dnewk.setToolTipText(MainFrame.getInstance().getResourceBundle().getString("mNewK"));
+		
+		//proizvod
+		
+		Image iproi = kit.getImage("images/proizvod.png");
+		
+		Dnewpr = new JButton(new ShowProizvodForm(""));
+		Dnewpr.setIcon(new ImageIcon(iproi));
+		Dnewpr.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		Dnewpr.setPreferredSize(new Dimension(40, 40));
+		Dnewpr.setToolTipText(MainFrame.getInstance().getResourceBundle().getString("mNewPr"));
+		
+		//parametar
+		
+		Image iparam = kit.getImage("images/parametar.png");
+		
+		Dnewpa = new JButton(new ShowParameterForm(""));
+		Dnewpa.setIcon(new ImageIcon(iparam));
+		Dnewpa.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		Dnewpa.setPreferredSize(new Dimension(40, 40));
+		Dnewpa.setToolTipText(MainFrame.getInstance().getResourceBundle().getString("mNewPa"));
+		
+		//ostalo
+		
+		Dedit = new JButton(new EditAction(""));
+		Image iedit = kit.getImage("images/edit.png");
+		Dedit.setIcon(new ImageIcon(iedit));
+		Dedit.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		Dedit.setPreferredSize(new Dimension(40, 40));
+		Dedit.setToolTipText(MainFrame.getInstance().getResourceBundle().getString("editTool"));
+		
+		Ddelete = new JButton(new RemoveAction(""));
+		Image idelete = kit.getImage("images/delete.png");
+		Ddelete.setIcon(new ImageIcon(idelete));
+		Ddelete.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		Ddelete.setPreferredSize(new Dimension(40, 40));
+		Ddelete.setToolTipText(MainFrame.getInstance().getResourceBundle().getString("deleteTool"));
+		
+		//dodavanje
+
+		
+		add(Dnewk);
+		addSeparator();
+		
+		add(Dnewpr);
+		addSeparator();
+		
+		add(Dnewpa);
+		addSeparator();
+		
+		add(Box.createRigidArea(new Dimension(20, 20)));
+		
+		add(Dedit);
+		addSeparator();
+		
+		add(Ddelete);
+		addSeparator();
+		
+		add(Box.createRigidArea(new Dimension(20, 20)));
+		
+		
+	}
+	
+	public void initComponents() {
+		
+		Dnewk.setToolTipText(MainFrame.getInstance().getResourceBundle().getString("mNewK"));
+
+		Dnewpr.setToolTipText(MainFrame.getInstance().getResourceBundle().getString("mNewPr"));
+		
+		Dnewpa.setToolTipText(MainFrame.getInstance().getResourceBundle().getString("mNewPa"));
+		
+		Dedit.setToolTipText(MainFrame.getInstance().getResourceBundle().getString("editTool"));
+		
+		Ddelete.setToolTipText(MainFrame.getInstance().getResourceBundle().getString("deleteTool"));
+		
+	}
+}

@@ -1,0 +1,157 @@
+mniSrpski = Sprski
+
+mniEngleski = Engleski
+
+mainTitle = InstaFram
+
+lstatus2Def = Po\u010Detak
+
+lkorisnikDef = Podrazumevani korisnik
+
+lkorisnikTool = Trenutni korisnik
+
+formeClose = Forma zatvorena
+
+workspaceDef = Podrazumevani prostor
+
+helpTitle = Pomo\u0107
+
+lbNaziv = Naziv: 
+
+lbAdresa = Adresa: 
+
+lbCeo = Izvr\u0161ni direktor: 
+
+btOk = Sa\u010Duvaj
+
+btDodaj = Dodaj
+
+btOdustani = Odustani
+
+btKraj = Kraj
+
+jmFile = Datoteka
+
+jmEdit = Izmeni
+
+jmView = Pogled
+
+btHelp = Pomo\u0107
+
+btAbout = O programu
+
+txtAbout = Napravio Aleksandar Petakovi\u0107, RA77-2016\n\n\nVerzija 4.3\n\n\nICEpdf je "open source" PDF alatka za pregled, \u0161tampanje i markiranje PDF dokumenata.\n©2017 ICEsoft Technologies Inc.
+
+aboutTitle = O InstaFramu
+
+jmNew = Novo
+
+jmImport = Uvezi
+
+jmExport = Izvezi
+
+mOpen = Otvori
+
+mExit = Izadji
+
+mKompanija = Kompanija
+
+mProizvod = Proizvod
+
+mParametar = Parametar
+
+mWorkspace = Izmena radnog prostora/korisnika
+
+mSave = Sa\u010Duvaj
+
+mCut = Iseci
+
+mCopy = Umno\u017Ei
+
+mPaste = Nalepi
+
+mNewK = Nova Kompanija
+
+mNewPr = Nov Proizvod
+
+mNewPa = Nov Parametar
+
+editTool = Izmena izabrane stavke
+
+deleteTool = Brisanje izabrane stavke
+
+lbVrednost = Vrednost: 
+
+startTitle = Dobrodo\u0161li
+
+lbWorkspace = Radni prostor: 
+
+lbKorisnik = Korisnik: 
+
+lbCena = Cena: 
+
+lbVerzija = Verzija: 
+
+btAddLogo = Dodaj logo
+
+btRemLogo = Ukloni logo
+
+statusGreska = Gre\u0161ka, izabran pogre\u0161an \u010Dvor
+
+statusG = Gre\u0161ka
+
+statusAddKomp = Kompanija dodata
+
+statusAddPar = Parametar dodat
+
+statusAddPro = Proizvod dodat
+
+statusEditKomp = Izmena kompanije
+
+statusEditPro = Izmena proizvoda
+
+statusEditPar = Izmena parametra
+
+gNaziv = Unesite naziv
+
+gSediste = Unesite adresu
+
+gCeo = Unesite izvr\u0161nog direktora
+
+statusKompCon = Kompanija kreirana/izmenjena
+
+gVrednost = Unesite vrednost
+
+statusParCon = Parametar kreiran/izmenjen
+
+gKreator = Unesite kreatora
+
+gVerzija = Unesite verziju
+
+statusRem = Uklonjena stavka
+
+statusProCon = Proizvod kreiran/izmenjen
+
+statusShowKomp = Prikazana forma kompanije
+
+statusShowPar = Prikazana forma parametra
+
+statusShowPro = Prikazana forma proizvoda
+
+yesOption=Da
+
+noOption=Ne
+
+cancelOption=Odustani
+
+okOption=Potvrdi
+
+statusTreeImport= U\u010Ditan radni prostor
+
+statusTreeExport = Sa\u010Duvan radni prostor
+
+btImport = Uvezi
+
+btExport = Izvezi
+
+btKonf = Konfigurator

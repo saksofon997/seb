@@ -1,0 +1,185 @@
+package views;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Image;
+import java.awt.Toolkit;
+
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
+import javax.swing.JTextField;
+import javax.swing.JTree;
+import javax.swing.border.Border;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
+import javax.swing.tree.TreeSelectionModel;
+
+import org.omg.CORBA.WStringSeqHelper;
+
+import models.Workspace;
+
+public class MainFrame extends JFrame{
+
+	private static MainFrame instance;
+	
+	static {
+		instance = new MainFrame();
+	}
+	
+	private JLabel lstatus;
+	private JTextField lstatus2;
+	private JTextField lkorisnik;
+	private JPanel forme;
+	private JTree tree;
+	private DefaultTreeModel treeModel;
+	private JSplitPane jSplitPane;
+	private JPanel pLeft;
+	private Workspace ws;
+	
+	public void setLkorisnik(String korisnik) {
+		if(korisnik == null)
+			return;
+		
+		if(korisnik.isEmpty())
+			return;
+		
+		lkorisnik.setText(korisnik);
+	}
+
+	public MainFrame() {
+		super();
+		
+		setLayout(new BorderLayout());
+		
+		initTree();
+		
+		Toolkit kit = Toolkit.getDefaultToolkit();
+		Dimension screensize = kit.getScreenSize();
+		int screenHeight = screensize.height;
+		int screenWidth = screensize.width;
+		setSize(900, 480);
+		setMinimumSize(new Dimension(900, 480));
+		setLocationRelativeTo(null);
+		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		setTitle("InstaFram");
+		
+		Image ico = kit.getImage("images/title.png");
+		setIconImage(ico);
+		
+		MyToolbar toolbar = new MyToolbar();
+		add(toolbar, BorderLayout.NORTH);
+		
+		MyMenubar menubar = new MyMenubar();
+		this.setJMenuBar(menubar);
+		
+		pLeft = new JPanel(new BorderLayout());
+		pLeft.setPreferredSize(new Dimension(screenWidth * 3 / 16, 500));
+		pLeft.add(new JScrollPane(tree));
+		
+		JPanel pBottom = new JPanel();
+
+		pBottom.setLayout(new BoxLayout(pBottom,BoxLayout.X_AXIS));
+		pBottom.setPreferredSize(new Dimension(screenWidth * 3 / 4, 40));
+		pBottom.setBackground(Color.LIGHT_GRAY);
+		lstatus = new JLabel("Status:");
+		
+		lstatus2 = new JTextField("Početak");
+		lstatus2.setEditable(false);
+		lstatus2.setPreferredSize(new Dimension(300,  30));
+		lstatus2.setMaximumSize(new Dimension(400,  30));
+		lstatus2.setHorizontalAlignment(JTextField.CENTER);
+		
+		lkorisnik = new JTextField("Podrazumevani korisnik");
+		lkorisnik.setToolTipText("Trenutni korisnik");
+		lkorisnik.setBackground(Color.YELLOW);
+		lkorisnik.setHorizontalAlignment(JTextField.CENTER);
+		lkorisnik.setPreferredSize(new Dimension(150, 30));
+		lkorisnik.setMaximumSize(new Dimension(200, 30));
+		lkorisnik.setEditable(false);
+		
+		pBottom.add(Box.createHorizontalStrut(20));
+		pBottom.add(lstatus);
+		pBottom.add(Box.createHorizontalStrut(10));
+		pBottom.add(lstatus2);
+		pBottom.add(Box.createHorizontalGlue());
+		pBottom.add(lkorisnik);
+		pBottom.add(Box.createHorizontalStrut(20));
+		
+		forme = new JPanel();
+		
+		//povezivanje
+		add(pLeft, BorderLayout.WEST);
+		add(pBottom, BorderLayout.SOUTH);
+		add(forme, BorderLayout.CENTER);
+	}
+	
+	public void resetForme() {
+		this.remove(forme);
+		forme = new JPanel();
+		this.add(forme, BorderLayout.CENTER);
+        invalidate(); validate();
+        repaint();
+        setLstatus2("Forma zatvorena");
+	}
+	
+	public void initTree() {
+		ws = new Workspace("Podrazumevani prostor");
+		
+		treeModel = new DefaultTreeModel(new DefaultMutableTreeNode(ws));
+		treeModel.setAsksAllowsChildren(true);
+		tree = new JTree(treeModel);
+		tree.setEditable(false);
+		tree.setCellRenderer(new NodeTreeCellRenderer());
+		tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+		setTree(tree);
+	}
+	
+	public DefaultTreeModel getModel() {
+		return treeModel;
+	}
+	
+	public void setWorkspaceName(String name) {
+		if(name == null)
+			return;
+		name = name.trim();
+		if(name.isEmpty())
+			return;
+		
+		ws.setName(name);
+	}
+	
+	public void setForma(JPanel panel) {
+		this.remove(forme);
+        forme = panel;
+        this.add(forme, BorderLayout.CENTER);
+        invalidate(); validate();
+        repaint();
+	}
+	
+	public static MainFrame getInstance() {
+		return instance;
+	}
+	
+	public void setTree(JTree tree) {
+		this.tree = tree;
+	}
+	
+	public JTree getTree() {
+		return tree;
+	}
+
+	public void setLstatus2(String text) {
+		this.lstatus2.setText(text);
+	}
+	
+	
+}

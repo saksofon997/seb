@@ -1,0 +1,69 @@
+package actions;
+
+import java.awt.Image;
+
+import models.Proizvod;
+import views.ProizvodView;
+
+public class ProizvodController {
+
+	private static Proizvod proizvod;
+	private static ProizvodView proizvodView;
+	
+	public ProizvodController(Proizvod proizvod, ProizvodView proizvodView) {
+		setProizvod(proizvod);
+		setProizvodView(proizvodView);
+	}
+	
+	public void setProizvod(Proizvod proizvod) {
+		if(proizvod == null)
+			throw new NullPointerException();
+		ProizvodController.proizvod = proizvod;
+	}
+	
+	public void setProizvodView(ProizvodView proizvodView) {
+		if(proizvodView == null)
+			throw new NullPointerException();
+		ProizvodController.proizvodView = proizvodView;
+	}
+
+	public static Proizvod getProizvod() {
+		return proizvod;
+	}
+
+	public static ProizvodView getProizvodView() {
+		return proizvodView;
+	}
+	
+	public static void resetProizvod() {
+		proizvod = new Proizvod();
+		proizvodView.refreshView();
+	}
+	
+	public String createProizvod(String naziv, String kreator, String verzija, Image logo) {
+		if(naziv == null)
+			return "Unesite naziv";
+		naziv = naziv.trim();
+		if(naziv.isEmpty())
+			return "Unesite naziv";
+		
+		if(kreator == null)
+			return "Unesite ime kretora";
+		kreator = kreator.trim();
+		if(kreator.isEmpty())
+			return "Unesite ime kreatora";
+		
+		if(verzija == null)
+			return "Unesite verziju";
+		verzija = verzija.trim();
+		if(verzija.isEmpty())
+			return "Unesite verziju";
+		
+		proizvod.setNaziv(naziv);
+		proizvod.setKreator(kreator);
+		proizvod.setVerzija(verzija);
+		proizvod.setLogo(logo);
+		
+		return "Proizvod kreiran/izmenjen";
+	}
+}

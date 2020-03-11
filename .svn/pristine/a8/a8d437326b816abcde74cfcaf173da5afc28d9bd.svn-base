@@ -1,0 +1,233 @@
+package views;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Event;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
+
+import actions.EditAction;
+import actions.ShowKompanijaForm;
+import actions.ShowParameterForm;
+import actions.ShowProizvodForm;
+
+public class MyMenubar extends JMenuBar{
+
+	public MyMenubar() {
+		
+	this.setBackground(Color.LIGHT_GRAY);
+	
+	//glavni meni bar
+
+	JMenu Mfile = new JMenu("File");
+	Mfile.setMnemonic('f');
+	
+	JMenu Medit = new JMenu("Edit");
+	Medit.setMnemonic('e');
+	
+	JMenu Mview = new JMenu("Tools");
+	Mview.setMnemonic('t');
+	
+	JButton Mhelp = new JButton("Help");
+	Mhelp.setMnemonic('h');
+	Mhelp.addMouseListener(new MouseListener() {
+		
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			HelpDialog.getInstance().setVisible(true);
+		}
+	});
+	
+	JButton Mabout = new JButton("About");
+	Mabout.addMouseListener(new MouseListener() {
+		
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			JOptionPane.showMessageDialog(null, "Made by Aleksandar Petaković, RA77-2016 \n\n\n ICEpdf is an open source PDF engine for viewing, printing, and annotating PDF documents. \n ©2017 ICEsoft Technologies Inc.", "About InstaFram", JOptionPane.INFORMATION_MESSAGE);
+		}
+	});
+		
+	//ugnjezdeni meniji
+		
+	JMenu Mnew = new JMenu("New");
+	Mnew.setMnemonic('n');
+	
+	JMenu Mimport = new JMenu("Import");
+	Mimport.setMnemonic('i');
+	
+	JMenu Mexport = new JMenu("Export");
+	Mexport.setMnemonic('e');
+	
+	//meni predmeti u file
+		
+	JMenuItem Mopen = new JMenuItem(new EditAction("Open"));
+	Mopen.setMnemonic('o');
+	Mopen.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, Event.CTRL_MASK));
+	
+	JMenuItem Mexit = new JMenuItem("Exit");
+	Mexit.setMnemonic('x');
+	
+	JMenuItem Mkomp = new JMenuItem(new ShowKompanijaForm("Kompanija"));
+	Mkomp.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_K, Event.CTRL_MASK));
+	Mkomp.setMnemonic('k');
+	
+	JMenuItem Mproiz = new JMenuItem(new ShowProizvodForm("Proizvod"));
+	Mproiz.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, Event.CTRL_MASK));
+	Mproiz.setMnemonic('p');
+	
+	JMenuItem Mparam = new JMenuItem(new ShowParameterForm("Parametar"));
+	Mparam.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, Event.CTRL_MASK));
+	Mparam.setMnemonic('r');
+	
+	JMenuItem Mswitch = new JMenuItem("Switch User/Workspace");
+	Mswitch.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			Pocetak.getInstance().setVisible(true);
+			
+			
+		}
+	});
+	
+	JMenuItem Msave = new JMenuItem("Save");
+	Msave.setMnemonic('s');
+	Msave.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK));
+	
+	JMenuItem Mtotext = new JMenuItem("To Text");
+	
+	JMenuItem Mtoexcel = new JMenuItem("To Excel");
+	
+	JMenuItem Mtopdf = new JMenuItem("To PDF");
+	
+	JMenuItem Mfromtext = new JMenuItem("From Text");
+	
+	JMenuItem Mfromexcel = new JMenuItem("From Excel");
+	
+	JMenuItem Mfrompdf = new JMenuItem("From PDF");
+	
+	//meni predmeti u edit
+	
+	JMenuItem Mcut = new JMenuItem("Cut");
+	Mcut.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, Event.CTRL_MASK));
+	Mcut.setMnemonic('u');
+	
+	JMenuItem Mcopy = new JMenuItem("Copy");
+	Mcopy.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, Event.CTRL_MASK));
+	Mcopy.setMnemonic('o');
+	
+	JMenuItem Mpaste = new JMenuItem("Paste");
+	Mpaste.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, Event.CTRL_MASK));
+	Mpaste.setMnemonic('a');
+	
+	//za uraditi
+	
+	JMenuItem Minprogress1 = new JMenuItem("In Progress");
+	
+	//povezivanje
+	
+		//new
+	Mnew.add(Mkomp);
+	Mnew.add(Mproiz);
+	Mnew.add(Mparam);
+	
+		//import
+	Mimport.add(Mfromexcel);
+	Mimport.add(Mfrompdf);
+	Mimport.add(Mfromtext);
+	
+		//export
+	Mexport.add(Mtoexcel);
+	Mexport.add(Mtopdf);
+	Mexport.add(Mtotext);
+	
+		//file
+	Mfile.add(Mnew);
+	Mfile.add(Mopen);
+	Mfile.add(Mswitch);
+	Mfile.addSeparator();
+	Mfile.add(Msave);
+	Mfile.addSeparator();
+	Mfile.add(Mimport);
+	Mfile.add(Mexport);
+	Mfile.addSeparator();
+	Mfile.add(Mexit);
+	
+		//edit
+	Medit.add(Mcut);
+	Medit.add(Mcopy);
+	Medit.add(Mpaste);
+	
+		//view
+	Mview.add(Minprogress1);
+	
+		//glavni meni
+	add(Mfile);
+	add(Medit);
+	add(Mview);
+	add(Box.createHorizontalGlue());
+	add(Mhelp);
+	add(Box.createRigidArea(new Dimension(5, 10)));
+	add(Mabout);
+	}
+}

@@ -1,0 +1,77 @@
+package actions;
+
+import java.awt.Image;
+
+import models.Kompanija;
+import views.KompanijaView;
+
+public class KompanijaController {
+
+	private static Kompanija kompanija;
+	private static KompanijaView kompanijaView;
+	
+	public KompanijaController(Kompanija kompanija, KompanijaView kompanijaView) {
+		setKompanija(kompanija);
+		setKompanijaView(kompanijaView);
+		
+	}
+
+	public void setKompanija(Kompanija kompanija) {
+		if(kompanija == null) {
+			throw new NullPointerException();
+		}
+		KompanijaController.kompanija = kompanija;
+	}
+
+	public void setKompanijaView(KompanijaView kompanijaView) {
+		if(kompanijaView == null) {
+			throw new NullPointerException();
+		}
+		KompanijaController.kompanijaView = kompanijaView;
+	}
+	
+	public static Kompanija getKompanija() {
+		return kompanija;
+	}
+	
+	public static void resetKompanija() {
+		kompanija = new Kompanija();
+		kompanijaView.refreshView();
+	}
+
+	public KompanijaView getKompanijaView() {
+		return kompanijaView;
+	}
+
+	public String createKompanija(String naziv, String sediste, String CEO) {
+		if(naziv == null) {
+			return "Unesite naziv kompanije";
+		}
+		naziv = naziv.trim();
+		if(naziv.isEmpty()) {
+			return "Unesite naziv kompanije";
+		}
+		
+		if(sediste == null) {
+			return "Unesite sediste kompanije";
+		}
+		sediste = sediste.trim();
+		if(sediste.isEmpty()) {
+			return "Unesite sediste kompanije";
+		}
+		
+		if(CEO == null) {
+			return "Unesite CEO-a kompanije";
+		}
+		CEO = CEO.trim();
+		if(CEO.isEmpty()) {
+			return "Unesite CEO-a kompanije";
+		}
+		
+		kompanija.setNaziv(naziv);
+		kompanija.setSediste(sediste);
+		kompanija.setCEO(CEO);
+		
+		return "Kompanija kreirana/izmenjena";
+	}
+}

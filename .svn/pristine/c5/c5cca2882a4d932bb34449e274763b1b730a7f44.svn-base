@@ -1,0 +1,183 @@
+mniSrpski = Serbian
+
+mniEngleski = English
+
+mainTitle = InstaFram
+
+lstatus2Def = Start
+
+lkorisnikDef = Default User
+
+lkorisnikTool = Current User
+
+formeClose = Form closed
+
+workspaceDef = Default Workspace
+
+helpTitle = Help
+
+lbNaziv = Name: 
+
+lbAdresa = Address: 
+
+lbCeo = Chief executive officer
+
+btOk = Save
+
+btDodaj = Add
+
+btOdustani = Cancel
+
+btKraj = End
+
+jmFile = File
+
+jmEdit = Edit
+
+jmView = View
+
+btHelp = Help
+
+btAbout = About
+
+txtAbout = Made by Aleksandar Petakovi\u0107, RA77-2016\n\n\nVersion 4.3\n\n\nICEpdf is an open source PDF engine for viewing, printing, and annotating PDF documents.\n©2017 ICEsoft Technologies Inc.
+
+aboutTitle = About InstaFram
+
+jmNew = New
+
+jmImport = Import
+
+jmExport = Export
+
+mOpen = Open
+
+mExit = Exit
+
+mKompanija = Company
+
+mProizvod = Product
+
+mParametar = Parameter
+
+mWorkspace = Switch Workspace/User
+
+mSave = Save
+
+mCut = Cut
+
+mCopy = Copy
+
+mPaste = Paste
+
+mNewK = New Company
+
+mNewPr = New Product
+
+mNewPa = New Parameter
+
+editTool = Edit selected Item
+
+deleteTool = Delete selected Item
+
+lbVrednost = Value: 
+
+startTitle = Welcome
+
+lbWorkspace = Workspace: 
+
+lbKorisnik = User: 
+
+lbCena = Price: 
+
+lbVerzija = Version: 
+
+btAddLogo = Add logo
+
+btRemLogo = Remove logo
+
+statusGreska = Error, wrong Node selected
+
+statusG = Error
+
+statusAddKomp = Company added
+
+statusAddPar = Parameter added
+
+statusAddPro = Product added
+
+statusEditKomp = Edit company
+
+statusEditPro = Edit product
+
+statusEditPar = Edit parameter
+
+gNaziv = Enter a Title
+
+gSediste = Enter an Address
+
+gCeo = Enter a Chief Executive Officer
+
+statusKompCon = Company created/edited
+
+gVrednost = Enter a value
+
+statusParCon = Parameter created/edited
+
+gKreator = Enter a Creator
+
+gVerzija = Enter a Version
+
+statusRem = Item removed
+
+statusProCon = Product created/edited
+
+statusShowKomp = Showing Company Form
+
+statusShowPar = Showing Parameter Form
+
+statusShowPro = Showing Product Form
+
+yesOption=Yes
+
+noOption=No
+
+cancelOption=Cancel
+
+okOption=OK
+
+statusTreeImport= Workspace imported
+
+statusTreeExport = Workspace exported
+
+btImport = Import
+
+btExport = Export
+
+btKonf = Configurator
+
+konfTitle = Configurator
+
+lizvorkonf = Source
+
+lwelcomek = Welcome text
+
+llicencek = Licence
+
+lverzijak = Version
+
+btexportk = Export
+
+btnext = Next
+
+slaganje = I agree with the terms and conditions
+
+greskawiz = Error, no directory selected
+
+destination = Destination folder
+
+izaberidir = Choose a directory
+
+greskainstall = Error while installing
+
+uspesnainstall = The software package has benn succesfully installed

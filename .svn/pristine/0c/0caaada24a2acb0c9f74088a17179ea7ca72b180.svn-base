@@ -1,0 +1,294 @@
+package views;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.JTree;
+import javax.swing.UIManager;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeSelectionModel;
+
+import models.Kompanija;
+import models.Parametar;
+import models.Proizvod;
+import models.Workspace;
+import views.tree.NodeTreeCellRenderer;
+
+public class MainFrame extends JFrame{
+
+	private static MainFrame instance = null;
+	
+	private ResourceBundle resourceBundle;
+	
+	private JLabel lstatus;
+	private JTextField lstatus2;
+	private JTextField lkorisnik;
+	private JPanel forme;
+	private JTree tree;
+	private DefaultTreeModel treeModel;
+	private JPanel pLeft;
+	private Workspace ws;
+	private MyToolbar toolbar;
+	private MyMenubar menubar;
+	private JScrollPane pane;
+	private JLabel lclock;
+	
+	public void setLkorisnik(String korisnik) {
+		if(korisnik == null)
+			return;
+		
+		if(korisnik.isEmpty())
+			return;
+		
+		lkorisnik.setText(korisnik);
+	}
+
+	public MainFrame() {		
+		Locale.setDefault(new Locale("sr","RS"));
+		resourceBundle =ResourceBundle.getBundle( "views.MessageResources.MessageResources", Locale.getDefault());
+	}
+	
+	private void initGUI() {
+		// TODO Auto-generated method stub
+		
+		UIManager.put("OptionPane.yesButtonText", resourceBundle.getObject("yesOption"));
+		UIManager.put("OptionPane.noButtonText", resourceBundle.getObject("noOption"));
+		UIManager.put("OptionPane.okButtonText", resourceBundle.getObject("okOption"));
+		UIManager.put("OptionPane.cancelButtonText", resourceBundle.getObject("cancelOption"));
+		
+		setLayout(new BorderLayout());
+		
+		Toolkit kit = Toolkit.getDefaultToolkit();
+		
+		Dimension screensize = kit.getScreenSize();
+		
+		int screenWidth = screensize.width;
+		
+		setSize(900, 480);
+		
+		setMinimumSize(new Dimension(900, 480));
+		
+		setLocationRelativeTo(null);
+		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		setTitle(resourceBundle.getString("mainTitle"));
+		
+		Image ico = kit.getImage("images/title.png");
+		setIconImage(ico);
+		
+		 toolbar = new MyToolbar();
+		add(toolbar, BorderLayout.NORTH);
+		
+		 menubar = new MyMenubar();
+		this.setJMenuBar(menubar);
+		
+		pLeft = new JPanel(new BorderLayout());
+		pLeft.setPreferredSize(new Dimension(screenWidth * 3 / 16, 500));
+		pane = new JScrollPane(tree);
+		pLeft.add(pane);
+		
+		JPanel pBottom = new JPanel();
+
+		pBottom.setLayout(new BoxLayout(pBottom,BoxLayout.X_AXIS));
+		pBottom.setPreferredSize(new Dimension(screenWidth * 3 / 4, 40));
+		pBottom.setBackground(Color.LIGHT_GRAY);
+		lstatus = new JLabel("Status:");
+		
+		lstatus2 = new JTextField(resourceBundle.getString("lstatus2Def"));
+		lstatus2.setEditable(false);
+		lstatus2.setPreferredSize(new Dimension(300,  30));
+		lstatus2.setMaximumSize(new Dimension(400,  30));
+		lstatus2.setHorizontalAlignment(JTextField.CENTER);
+		
+		lkorisnik = new JTextField(resourceBundle.getString("lkorisnikDef"));
+		lkorisnik.setToolTipText(resourceBundle.getString("lkorisnikTool"));
+		lkorisnik.setBackground(Color.YELLOW);
+		lkorisnik.setHorizontalAlignment(JTextField.CENTER);
+		lkorisnik.setPreferredSize(new Dimension(150, 30));
+		lkorisnik.setMaximumSize(new Dimension(200, 30));
+		lkorisnik.setEditable(false);
+		
+		lclock = new JLabel();
+		
+		pBottom.add(Box.createHorizontalStrut(20));
+		pBottom.add(lstatus);
+		pBottom.add(Box.createHorizontalStrut(10));
+		pBottom.add(lstatus2);
+		pBottom.add(Box.createHorizontalGlue());
+		pBottom.add(lclock);
+		pBottom.add(Box.createHorizontalStrut(20));
+		pBottom.add(lkorisnik);
+		pBottom.add(Box.createHorizontalStrut(20));
+		
+		forme = new JPanel();
+		
+		//povezivanje
+		add(pLeft, BorderLayout.WEST);
+		add(pBottom, BorderLayout.SOUTH);
+		add(forme, BorderLayout.CENTER);
+	}
+
+	public void resetForme() {
+		this.remove(forme);
+		forme = new JPanel();
+		this.add(forme, BorderLayout.CENTER);
+        invalidate(); validate();
+        repaint();
+        setLstatus2(resourceBundle.getString("formeClose"));
+	}
+	
+	public void initTree() {
+		
+		ws = new Workspace(resourceBundle.getString("workspaceDef"));
+		
+		treeModel = new DefaultTreeModel(new DefaultMutableTreeNode(ws));
+		treeModel.setAsksAllowsChildren(true);
+		tree = new JTree(treeModel);
+		tree.setEditable(false);
+		tree.setCellRenderer(new NodeTreeCellRenderer());
+		tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+		setTree(tree);
+	}
+	
+	public DefaultTreeModel getTreeModel() {
+		return treeModel;
+	}
+	
+	public void setWorkspaceName(String name) {
+		if(name == null)
+			return;
+		name = name.trim();
+		if(name.isEmpty())
+			return;
+		
+		ws.setName(name);
+	}
+	
+	public void setForma(JPanel panel) {
+		this.remove(forme);
+        forme = panel;
+        this.add(forme, BorderLayout.CENTER);
+        invalidate(); validate();
+        repaint();
+	}
+	
+	public static MainFrame getInstance() {
+		if (instance == null){
+			instance = new MainFrame();
+			instance.initTree();
+			instance.initGUI();
+		}
+		
+		return instance;
+	}
+	
+	public void setTree(JTree tree) {
+		this.tree = tree;
+	}
+	
+	public Workspace getWs() {
+		return ws;
+	}
+
+	public void setWs(Workspace ws) {
+		this.ws = ws;
+		loadWs(ws);
+	}
+	
+	public void loadWs(Workspace ws) {
+		treeModel = new DefaultTreeModel(new DefaultMutableTreeNode(ws));
+		treeModel.setAsksAllowsChildren(true);
+		tree = new JTree(treeModel);
+		tree.setEditable(false);
+		tree.setCellRenderer(new NodeTreeCellRenderer());
+		tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+		setTree(tree);
+		DefaultMutableTreeNode root = ((DefaultMutableTreeNode)tree.getModel().getRoot());
+		metoda(ws.getChildren(), root);
+
+		pLeft.remove(pane);
+		pane = new JScrollPane(tree);
+		pLeft.add(pane);
+        invalidate(); validate();
+        repaint();
+	}
+
+	public JTree getTree() {
+		return tree;
+	}
+	
+	public void metoda(List<Object> list, DefaultMutableTreeNode parent) {
+		
+		if(list.isEmpty())
+		{
+			return;
+		}
+		for(int i = 0; i < list.size(); i++)
+		{
+				
+				DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(list.get(i));
+				
+				treeModel.insertNodeInto(newNode, parent, parent.getChildCount());
+				
+				if(list.get(i) instanceof Kompanija)
+				metoda(((Kompanija) list.get(i)).getChildren(), newNode);
+				else if(list.get(i) instanceof Proizvod)
+					metoda(((Proizvod) list.get(i)).getChildren(), newNode);
+				else if(list.get(i) instanceof Parametar)
+					metoda(((Parametar) list.get(i)).getChildren(), newNode);
+				
+		}
+	}
+
+	public void setLstatus2(String text) {
+		this.lstatus2.setText(text);
+	}
+	
+	public ResourceBundle getResourceBundle() {
+		return resourceBundle;
+	}
+	
+	public void changeLanguage(){
+		
+		resourceBundle = ResourceBundle.getBundle( "views.MessageResources.MessageResources", Locale.getDefault() );
+	    setTitle(resourceBundle.getString("mainTitle"));
+	    invalidate();
+	    
+	    //init komponente
+	    menubar.initComponents();
+	    toolbar.initComponents();
+	    
+		lstatus2.setText(resourceBundle.getString("lstatus2Def"));
+		lkorisnik.setText(resourceBundle.getString("lkorisnikDef"));
+		lkorisnik.setToolTipText(resourceBundle.getString("lkorisnikTool"));
+		ws.setName(resourceBundle.getString("workspaceDef"));
+		Pocetak.getInstance().invalidate();
+		Pocetak.getInstance().initComponents();
+		Pocetak.getInstance().validate();
+		Pocetak.getInstance().repaint();
+	    
+	    validate();
+        repaint();
+		
+		UIManager.put("OptionPane.yesButtonText", resourceBundle.getObject("yesOption"));
+		UIManager.put("OptionPane.noButtonText", resourceBundle.getObject("noOption"));
+		UIManager.put("OptionPane.okButtonText", resourceBundle.getObject("okOption"));
+		UIManager.put("OptionPane.cancelButtonText", resourceBundle.getObject("cancelOption"));
+	
+	}
+}

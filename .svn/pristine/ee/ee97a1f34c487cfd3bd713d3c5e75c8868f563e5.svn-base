@@ -1,0 +1,61 @@
+package actions;
+
+import java.awt.event.ActionEvent;
+
+import javax.swing.AbstractAction;
+import javax.swing.tree.DefaultMutableTreeNode;
+
+import models.Kompanija;
+import models.Parametar;
+import models.Proizvod;
+import views.KompanijaView;
+import views.MainFrame;
+import views.ParametarView;
+import views.ProizvodView;
+
+public class EditAction extends AbstractAction{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	public EditAction(String name) {
+		// TODO Auto-generated constructor stub
+		super(name);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		
+		DefaultMutableTreeNode c1 = (DefaultMutableTreeNode) MainFrame.getInstance().getTree().getLastSelectedPathComponent();
+		
+		if(c1 == null)
+			return;
+		
+		if(c1.getUserObject() instanceof Kompanija) {
+			Kompanija k = (Kompanija) c1.getUserObject();
+			KompanijaView v = new KompanijaView(k);
+			MainFrame.getInstance().setForma(v);
+			MainFrame.getInstance().setLstatus2("Izmena kompanije");
+		}
+		else if(c1.getUserObject() instanceof Proizvod) {
+			Proizvod p = (Proizvod) c1.getUserObject();
+			ProizvodView v = new ProizvodView(p);
+			MainFrame.getInstance().setForma(v);
+			MainFrame.getInstance().setLstatus2("Izmena proizvoda");
+		}
+		else if(c1.getUserObject() instanceof Parametar) {
+			Parametar pa = (Parametar) c1.getUserObject();
+			ParametarView v = new ParametarView(pa);
+			MainFrame.getInstance().setForma(v);
+			MainFrame.getInstance().setLstatus2("Izmena parametra");
+		}
+		else {
+			MainFrame.getInstance().setLstatus2("Greška");
+		}
+		
+	}
+
+}

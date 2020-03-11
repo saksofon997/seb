@@ -1,0 +1,99 @@
+package views;
+
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.xml.transform.OutputKeys;
+
+public class Pocetak extends JFrame{
+
+	private static Pocetak instance;
+	
+	static {
+		instance = new Pocetak();
+	}
+	
+	private JLabel lradniprostor;
+	private JLabel luser;
+	
+	private JTextField tfradniprostor;
+	private JTextField tfuser;
+	
+	private JButton btok;
+	
+	GridBagConstraints gbc = new GridBagConstraints();
+	
+	public Pocetak() {
+		super();
+		
+		setSize(300,200);
+		setLocationRelativeTo(null);
+		setMinimumSize(new Dimension(300, 200));
+		
+		Toolkit kit = Toolkit.getDefaultToolkit();
+		
+		Image ipoc = kit.getImage("images/pocetak.png");
+		setIconImage(ipoc);
+		
+		setLayout(new GridBagLayout());
+		
+		setLocationRelativeTo(null);
+		
+		setTitle("Welcome");
+		
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		lradniprostor = new JLabel("Radni prostor: ");
+		add(lradniprostor, gbc);
+		
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		luser = new JLabel("Korisnik: ");
+		add(luser, gbc);
+		
+		gbc.gridx = 1;
+		gbc.gridy = 1;
+		tfradniprostor = new JTextField();
+		add(tfradniprostor, gbc);
+		tfradniprostor.setPreferredSize(new Dimension(100, 20));
+		
+		gbc.gridx = 1;
+		gbc.gridy = 0;
+		tfuser = new JTextField();
+		add(tfuser, gbc);
+		tfuser.setPreferredSize(new Dimension(100, 20));
+		
+		gbc.gridx = 1;
+		gbc.gridy = 2;
+		btok = new JButton("Ok");
+		btok.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				ok();
+			}
+		});
+		add(btok, gbc);
+	}
+	
+	public static Pocetak getInstance() {
+		return instance;
+	}
+	
+	public void ok() {
+		MainFrame.getInstance().setLkorisnik(tfuser.getText());
+		MainFrame.getInstance().setWorkspaceName(tfradniprostor.getText());
+		this.setVisible(false);
+	}
+}

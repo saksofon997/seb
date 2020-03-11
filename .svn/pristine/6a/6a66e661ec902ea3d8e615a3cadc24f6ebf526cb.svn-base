@@ -1,0 +1,43 @@
+package models;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import actions.MyCounter;
+
+
+public class Workspace implements Serializable{
+	String name;
+	List<Kompanija> kompanije;
+	
+	public Workspace() {
+		this.kompanije = new ArrayList<Kompanija>();
+	}
+	
+	public Workspace(String name) {
+		this();
+		this.name = name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public void setKompanija(List<Kompanija> kompanije) {
+		this.kompanije = kompanije;
+	}
+	
+	public void addKompanija(Kompanija newkomp) {
+		this.kompanije.add(newkomp);
+	}
+	
+	public void removeKompanija(Kompanija kompanija) {
+		this.kompanije.remove(kompanija);
+		kompanija.setParent(null);
+	}
+}

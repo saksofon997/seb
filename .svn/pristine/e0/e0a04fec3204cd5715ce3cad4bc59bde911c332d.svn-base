@@ -1,0 +1,223 @@
+package views;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Image;
+import java.awt.Insets;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.JTree;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
+import javax.swing.tree.TreeSelectionModel;
+
+import models.Parametar;
+import models.Proizvod;
+
+public class Konfigurator extends JFrame{
+
+	private static Konfigurator instance;
+	
+	static {
+		instance = new Konfigurator();
+	}
+	
+	private JLabel lizvor;
+	private JLabel lwelcome;
+	private JLabel llicence;
+	private JLabel lverzija;
+	
+	private JTextField tfizvor;
+	private JTextField tfwelcome;
+	private JTextField tflicence;
+	private JTextField tfverzija;
+	
+	private JPanel pleft;
+	private JPanel pright;
+	
+	private JTree tree = new JTree();
+	private DefaultTreeModel treeModel;
+	
+	private JButton btexport;
+	private JButton btcancel;
+	private JButton btfilechooser;
+	
+	GridBagConstraints gbc = new GridBagConstraints();
+	
+	public Konfigurator() {
+		super();
+		
+		setSize(640,480);
+		setLocationRelativeTo(null);
+		setMinimumSize(new Dimension(640, 480));
+		
+		Toolkit kit = Toolkit.getDefaultToolkit();
+		
+		Image ipoc = kit.getImage("images/pocetak.png");
+		setIconImage(ipoc);
+		
+		setLayout(new BorderLayout());
+		
+		setTitle("Konfigurator");
+		
+		setLocationRelativeTo(null);
+		
+		pleft = new JPanel();
+		pright = new JPanel();
+		
+		pleft = new JPanel(new BorderLayout());
+		pleft.setPreferredSize(new Dimension(200, 500));
+		
+		pright.setLayout(new GridBagLayout());
+		
+		gbc.insets = new Insets(5, 5, 5, 5);
+		
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		lizvor = new JLabel("izvor");
+		pright.add(lizvor, gbc);
+		
+		gbc.gridx = 1;
+		gbc.gridy = 0;
+		tfizvor = new JTextField();
+		pright.add(tfizvor, gbc);
+		
+		tfizvor.setPreferredSize(new Dimension(100, 20));
+		
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		lwelcome = new JLabel("welcome");
+		pright.add(lwelcome, gbc);
+		
+		gbc.gridx = 1;
+		gbc.gridy = 1;
+		tfwelcome = new JTextField();
+		pright.add(tfwelcome, gbc);
+		
+		tfwelcome.setPreferredSize(new Dimension(100, 20));
+		
+		gbc.gridx = 0;
+		gbc.gridy = 2;
+		llicence = new JLabel("licenca");
+		pright.add(llicence, gbc);
+		
+		gbc.gridx = 1;
+		gbc.gridy = 2;
+		tflicence = new JTextField();
+		pright.add(tflicence, gbc);
+		
+		tflicence.setPreferredSize(new Dimension(100, 20));
+		
+		gbc.gridx = 0;
+		gbc.gridy = 3;
+		lverzija = new JLabel("verzija");
+		pright.add(lverzija, gbc);
+		
+		gbc.gridx = 1;
+		gbc.gridy = 3;
+		tfverzija = new JTextField();
+		pright.add(tfverzija, gbc);
+		
+		tfverzija.setPreferredSize(new Dimension(100, 20));
+		
+		gbc.gridx = 0;
+		gbc.gridy = 4;
+		btexport = new JButton("export");
+		pright.add(btexport, gbc);
+		btexport.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		gbc.gridx = 1;
+		gbc.gridy = 4;
+		btcancel = new JButton("cancel");
+		pright.add(btcancel, gbc);
+		btexport.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		initKonf();
+		
+		pleft.add(new JScrollPane(tree));
+		add(pleft, BorderLayout.WEST);
+		add(pright, BorderLayout.CENTER);
+		
+	}
+	
+	public static Konfigurator getInstance() {
+		instance = new Konfigurator();
+		return instance;
+	}
+	
+	public void initKonf() {
+		DefaultMutableTreeNode sel = (DefaultMutableTreeNode) MainFrame.getInstance().getTree().getLastSelectedPathComponent();
+		if(!(sel.getUserObject() instanceof Proizvod))
+			return;
+		
+		treeModel = new DefaultTreeModel(new DefaultMutableTreeNode(sel.getUserObject()));
+		treeModel.setAsksAllowsChildren(true);
+		tree = new JTree(treeModel);
+		tree.setEditable(false);
+		tree.setCellRenderer(new NodeTreeCellRenderer());
+		tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+		DefaultMutableTreeNode root = ((DefaultMutableTreeNode)tree.getModel().getRoot());
+		setTree(tree);
+		metoda(((Proizvod)sel.getUserObject()).getParametri(), root);
+		setVisible(true);
+	}
+	
+	public void metoda(List<Parametar> list, DefaultMutableTreeNode parent) {
+		if(list.isEmpty())
+		{
+			return;
+		}
+		for(int i = 0; i < list.size(); i++)
+		{
+				
+				DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(list.get(i));
+				
+				treeModel.insertNodeInto(newNode, parent, parent.getChildCount());
+				
+				metoda(list.get(i).getParametri(), newNode);
+				
+		}
+	}
+
+	public JTree getTree() {
+		return tree;
+	}
+
+	public void setTree(JTree tree) {
+		this.tree = tree;
+	}
+
+	public DefaultTreeModel getTreeModel() {
+		return treeModel;
+	}
+
+	public void setTreeModel(DefaultTreeModel treeModel) {
+		this.treeModel = treeModel;
+	}
+}

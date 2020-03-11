@@ -1,0 +1,63 @@
+package actions;
+
+import java.awt.event.ActionEvent;
+
+import javax.swing.AbstractAction;
+import javax.swing.JTree;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
+
+import models.Kompanija;
+import models.Workspace;
+import views.MainFrame;
+
+public class AddKompanija extends AbstractAction{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4907350299385615568L;
+
+	public AddKompanija(String name) {
+		super(name);
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		DefaultMutableTreeNode parentNodeView = (DefaultMutableTreeNode) MainFrame.getInstance().getTree().getLastSelectedPathComponent();
+		
+		if(parentNodeView == null) return;
+		
+		if(!(parentNodeView.getUserObject() instanceof Workspace))
+		{
+			MainFrame.getInstance().setLstatus2("Greška, izabran pogrešan čvor");
+			return;
+		}
+		
+		Workspace parentNodeModel = (Workspace)parentNodeView.getUserObject();
+		
+		Kompanija childNodeModel = actions.KompanijaController.getKompanija();
+		
+		actions.KompanijaController.resetKompanija();
+		
+		childNodeModel.setParent(parentNodeModel);
+		
+		parentNodeModel.addKompanija(childNodeModel);
+		
+		DefaultMutableTreeNode childNodeView = new DefaultMutableTreeNode(childNodeModel);
+		
+		DefaultTreeModel model = MainFrame.getInstance().getModel();
+		
+		model.insertNodeInto(childNodeView, parentNodeView, parentNodeView.getChildCount());
+		
+		JTree tree = MainFrame.getInstance().getTree();
+		tree.setSelectionPath(new TreePath(childNodeView.getPath()));
+		tree.scrollPathToVisible(new TreePath(childNodeView.getPath()));
+		
+		views.MainFrame.getInstance().setLstatus2("Kompanija dodata");
+		
+	}
+
+}

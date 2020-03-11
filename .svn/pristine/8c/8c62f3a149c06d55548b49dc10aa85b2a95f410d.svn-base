@@ -1,0 +1,77 @@
+package models;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import actions.MyCounter;
+
+public class Parametar implements Serializable{
+
+	String naziv;
+	String vrednost;
+	Object parent;
+	List<Parametar> parametri;
+	
+	public Parametar() {
+		this.parametri = new ArrayList<Parametar>();
+	}
+	
+	public Object getParent() {
+		return parent;
+	}
+	
+	public List<Parametar> getParametri() {
+		return parametri;
+	}
+
+	public Parametar(String naziv, String vrednost) {
+		this();
+		this.naziv = naziv;
+		this.vrednost = vrednost;
+	}
+	
+	public void setParent(Object parent) {
+		if(parent instanceof Proizvod)
+			this.parent = (Proizvod) parent;
+		else if(parent instanceof Parametar)
+			this.parent = (Parametar) parent;
+	}
+
+	public String getNaziv() {
+		return naziv;
+	}
+
+	public void setNaziv(String naziv) {
+		this.naziv = naziv;
+	}
+
+	public String getVrednost() {
+		return vrednost;
+	}
+
+	public void setVrednost(String vrednost) {
+		this.vrednost = vrednost;
+	}
+
+	public void setParametri(List<Parametar> parametri) {
+		this.parametri = parametri;
+	}
+	
+	public void addParametar(Parametar newparam) {
+		this.parametri.add(newparam);
+	}
+	
+	public void removeParametar(Parametar param) {
+		this.parametri.remove(param);
+		param.setParent(null);
+	}
+
+	public void removeFromParent() {
+		// TODO Auto-generated method stub
+		if(this.parent instanceof Proizvod)
+			((Proizvod) this.parent).removeParametar(this);
+		else if(this.parent instanceof Parametar)
+			((Parametar) this.parent).removeParametar(this);
+	}
+}

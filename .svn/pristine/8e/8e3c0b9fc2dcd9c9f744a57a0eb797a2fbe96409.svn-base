@@ -1,0 +1,191 @@
+package views;
+
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.Box;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JToolBar;
+import javax.swing.SwingConstants;
+import javax.swing.tree.DefaultMutableTreeNode;
+
+import actions.EditAction;
+import actions.ExportAction;
+import actions.ImportAction;
+import actions.RemoveAction;
+import actions.ShowKompanijaForm;
+import actions.ShowParameterForm;
+import actions.ShowProizvodForm;
+import models.Proizvod;
+
+public class MyToolbar extends JToolBar{
+
+	private JButton Dnewk;
+
+	private JButton Dnewpr;
+	
+	private JButton Dnewpa;
+	
+	private JButton Dimport;
+	private JButton Dexport;
+	
+	private JButton Dkonf;
+	
+	private JButton Dedit;
+	private JButton Ddelete;
+	
+	public MyToolbar() {
+		
+		super(SwingConstants.HORIZONTAL);
+		
+		Toolkit kit = Toolkit.getDefaultToolkit();
+		
+		setFloatable(false);
+		
+		
+		Image ikomp = kit.getImage("images/kompanija.png");
+		
+		Dnewk = new JButton(new ShowKompanijaForm(""));
+		Dnewk.setIcon(new ImageIcon(ikomp));
+		Dnewk.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		Dnewk.setPreferredSize(new Dimension(40, 40));
+		Dnewk.setToolTipText(MainFrame.getInstance().getResourceBundle().getString("mNewK"));
+		
+		//proizvod
+		
+		Image iproi = kit.getImage("images/proizvod.png");
+		
+		Dnewpr = new JButton(new ShowProizvodForm(""));
+		Dnewpr.setIcon(new ImageIcon(iproi));
+		Dnewpr.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		Dnewpr.setPreferredSize(new Dimension(40, 40));
+		Dnewpr.setToolTipText(MainFrame.getInstance().getResourceBundle().getString("mNewPr"));
+		
+		//parametar
+		
+		Image iparam = kit.getImage("images/parametar.png");
+		
+		Dnewpa = new JButton(new ShowParameterForm(""));
+		Dnewpa.setIcon(new ImageIcon(iparam));
+		Dnewpa.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		Dnewpa.setPreferredSize(new Dimension(40, 40));
+		Dnewpa.setToolTipText(MainFrame.getInstance().getResourceBundle().getString("mNewPa"));
+		
+		//ostalo
+		
+		Dedit = new JButton(new EditAction(""));
+		Image iedit = kit.getImage("images/edit.png");
+		Dedit.setIcon(new ImageIcon(iedit));
+		Dedit.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		Dedit.setPreferredSize(new Dimension(40, 40));
+		Dedit.setToolTipText(MainFrame.getInstance().getResourceBundle().getString("editTool"));
+		
+		Ddelete = new JButton(new RemoveAction(""));
+		Image idelete = kit.getImage("images/delete.png");
+		Ddelete.setIcon(new ImageIcon(idelete));
+		Ddelete.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		Ddelete.setPreferredSize(new Dimension(40, 40));
+		Ddelete.setToolTipText(MainFrame.getInstance().getResourceBundle().getString("deleteTool"));
+		
+		//import
+		Image iimport = kit.getImage("images/import.png");
+		Dimport = new JButton(new ImportAction());
+		Dimport.setIcon(new ImageIcon(iimport));
+		Dimport.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		Dimport.setPreferredSize(new Dimension(40, 40));
+		Dimport.setToolTipText(MainFrame.getInstance().getResourceBundle().getString("btImport"));
+		
+		//export
+		Image iexport = kit.getImage("images/export.png");
+		Dexport = new JButton(new ExportAction());
+		Dexport.setIcon(new ImageIcon(iexport));
+		Dexport.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		Dexport.setPreferredSize(new Dimension(40, 40));
+		Dexport.setToolTipText(MainFrame.getInstance().getResourceBundle().getString("btExport"));
+		
+		//konfigurator
+		Image ikonfigurator = kit.getImage("images/konfigurator.png");
+		Dkonf = new JButton();
+		Dkonf.setIcon(new ImageIcon(ikonfigurator));
+		Dkonf.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		Dkonf.setPreferredSize(new Dimension(40, 40));
+		Dkonf.setToolTipText(MainFrame.getInstance().getResourceBundle().getString("btKonf"));
+		Dkonf.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				DefaultMutableTreeNode parentNodeView = (DefaultMutableTreeNode) MainFrame.getInstance().getTree().getLastSelectedPathComponent();
+				
+				if(parentNodeView == null) {
+					return;
+				}
+				
+				if(parentNodeView.getUserObject() instanceof Proizvod) {
+
+				views.Konfigurator.getInstance().initKonf();
+				
+				}
+				
+			}
+		});
+		
+		//dodavanje
+
+		
+		add(Dnewk);
+		addSeparator();
+		
+		add(Dnewpr);
+		addSeparator();
+		
+		add(Dnewpa);
+		addSeparator();
+		
+		add(Box.createRigidArea(new Dimension(20, 20)));
+		
+		add(Dedit);
+		addSeparator();
+		
+		add(Ddelete);
+		addSeparator();
+		
+		add(Box.createRigidArea(new Dimension(20, 20)));
+		
+		add(Dimport);
+		addSeparator();
+		
+		add(Dexport);
+		addSeparator();
+		
+		add(Dkonf);
+		addSeparator();
+		
+		
+	}
+	
+	public void initComponents() {
+		
+		Dnewk.setToolTipText(MainFrame.getInstance().getResourceBundle().getString("mNewK"));
+
+		Dnewpr.setToolTipText(MainFrame.getInstance().getResourceBundle().getString("mNewPr"));
+		
+		Dnewpa.setToolTipText(MainFrame.getInstance().getResourceBundle().getString("mNewPa"));
+		
+		Dedit.setToolTipText(MainFrame.getInstance().getResourceBundle().getString("editTool"));
+		
+		Ddelete.setToolTipText(MainFrame.getInstance().getResourceBundle().getString("deleteTool"));
+		
+		Dimport.setToolTipText(MainFrame.getInstance().getResourceBundle().getString("btImport"));
+		
+		Dexport.setToolTipText(MainFrame.getInstance().getResourceBundle().getString("btExport"));
+		
+		Dkonf.setToolTipText(MainFrame.getInstance().getResourceBundle().getString("btKonf"));
+		
+	}
+}
